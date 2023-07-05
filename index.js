@@ -55,7 +55,7 @@ app.post("/api/users/:id/exercises", (req, res) => {
       res.send("Couldn't find the user");
     } else {
       let newDate = new Date(date);
-      if (date.toString().includes("Invalid")) {
+      if (newDate.toString().includes("Invalid")) {
         newDate = new Date();
       }
       const newExercise = new exercise({
@@ -82,7 +82,7 @@ app.post("/api/users/:id/exercises", (req, res) => {
   });
 });
 
-app.get("/api/users/:id/logs/:", (req, res) => {
+app.get("/api/users/:id/logs", (req, res) => {
   const { from, to, limit } = req.query;
   const { id } = req.params;
   user.findById(id, (err, userData) => {
@@ -102,7 +102,7 @@ app.get("/api/users/:id/logs/:", (req, res) => {
       if (from || to) {
         filter.date = dateObj;
       }
-      let nonNullLimit;
+      let nonNullLimit = limit;
       if (limit === "null") {
         nonNullLimit = 500;
       }
